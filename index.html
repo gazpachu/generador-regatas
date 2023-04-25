@@ -1,0 +1,51 @@
+<body>
+  <h1>Generador de equipos para regatas</h1>
+  <form id="myForm">
+    <p>
+      <label for="participantes"">Capacidad del barco:</label>
+      <input type="number" id="participants" value="8" style="max-width: 40px" /> personas
+    </p>
+    <p>
+      <a target="_blank" href="https://docs.google.com/spreadsheets/d/1nCB2c5Boj2bOwyamWl4JFW-SR0KCKt2_zlUhJH_iod0/edit?usp=sharing">Copiar plantilla de participantes, editarla y descargarla en CSV</a>
+    </p>
+    <p>
+      <label for="csvFile"">Cargar lista de participantes (CSV):</label>
+      <input type="file" id="csvFile" accept=".csv" />
+    </p>
+    <p>
+      <input type="submit" value="Generar equipos" />
+    </p>
+  </form>
+  <script src="https://cdn.jsdelivr.net/npm/d3@7"></script>
+  <script>
+    const myForm = document.getElementById("myForm");
+    const csvFile = document.getElementById("csvFile");
+    const seatsPerBoat = document.getElementById("participants");
+
+    function generateGroups(data) {
+      const totalParticipants = data.length;
+      
+      console.log(totalParticipants);
+      if (totalParticipants < seatsPerBoat * 2) {
+        alert("No hay suficientes participantes para llenar dos barcos");
+      }
+    }
+
+    myForm.addEventListener("submit", function (e) {
+      e.preventDefault();
+      const input = csvFile.files[0];
+      const reader = new FileReader();
+
+      reader.onload = function (e) {
+        const text = e.target.result;
+        const data = d3.csvParse(text);
+        const parsedData = JSON.stringify(data);
+        document.write(parsedData);
+        console.log(data);
+        generateGroups(data);
+      };
+
+      reader.readAsText(input);
+    });
+  </script>
+</body>
