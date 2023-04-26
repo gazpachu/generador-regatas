@@ -55,8 +55,6 @@
   <script>
     const myForm = document.getElementById("myForm");
     const csvFile = document.getElementById("csvFile");
-    const seatsPerBoat = Number(document.getElementById("seatsPerBoat").value);
-    const minusPoints = Number(document.getElementById("minusPoints").value);
 
     /**
      * Implementation of https://en.wikipedia.org/wiki/Greedy_number_partitioning
@@ -87,6 +85,8 @@
     }
 
     function generateTeams(data) {
+      const seatsPerBoat = Number(document.getElementById("seatsPerBoat").value);
+      const minusPoints = Number(document.getElementById("minusPoints").value);
       const totalParticipants = data.length;
       const totalGroups = Math.floor(totalParticipants / seatsPerBoat);
       
